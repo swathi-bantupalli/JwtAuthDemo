@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JwtAuthDemo.Controller
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -10,7 +12,8 @@ namespace JwtAuthDemo.Controller
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("This is protected data. Only logged-in users can see this.");
+            var Username = User.Identity.Name;
+            return Ok($"Hello {Username},this is protected data.");
         }
     }
 }
